@@ -1,0 +1,25 @@
+.board{
+    width: 600px;
+    height: 600px;
+    background-color: lightgrey;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.board_row{
+    height: 55px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.board_col{
+    height: 100%;
+    width: 55px;
+    background-color: dodgerblue;
+}
+
+.placed{
+    background-color: crimson;
+}
