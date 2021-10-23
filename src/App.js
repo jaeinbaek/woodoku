@@ -4,6 +4,7 @@ import Board from './components/Board';
 import Footer from './components/Footer';
 
 import './css/App.css';
+import './css/Board.css';
 
 function App() {
   return (

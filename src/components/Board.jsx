@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import BoardRow from './BoardRow';
-import '../css/Board.css';
 
+// Function for declare board
 function create2DArray(row, col) {
   let arr = new Array(row);
   for (let i = 0; i < row; i ++) {
@@ -13,6 +13,7 @@ function create2DArray(row, col) {
 
 function Board() {
   const [board, setBoard] = useState(create2DArray(9, 9))
+
   const boardRowMap = board.map((row, index) => (<BoardRow value={row} key={index}></BoardRow>))
 
   return (

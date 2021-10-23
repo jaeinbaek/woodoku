@@ -1,6 +1,8 @@
 .board{
-    width: 600px;
-    height: 600px;
+    width: 400px;
+    height: 400px;
+    padding-left: 25px;
+    padding-right: 25px;
     background-color: lightgrey;
     display: flex;
     flex-direction: column;
@@ -8,7 +10,7 @@
 }
 
 .board_row{
-    height: 55px;
+    height: 40px;
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -16,7 +18,7 @@
 
 .board_col{
     height: 100%;
-    width: 55px;
+    width: 40px;
     background-color: dodgerblue;
 }
 
