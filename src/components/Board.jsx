@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import BoardRow from './BoardRow';
+import switchBlocks from './switchBlocks.js';
+
 
 // Function for declare board
 function create2DArray(row, col) {
@@ -14,11 +16,31 @@ function create2DArray(row, col) {
 function Board() {
   const [board, setBoard] = useState(create2DArray(9, 9))
 
-  const boardRowMap = board.map((row, index) => (<BoardRow value={row} key={index}></BoardRow>))
+  const deliverClickIndex = (row, col) => {
+    setBlock(row, col)
+  }
+
+  const boardRowMap = board.map((row, index) => (<BoardRow value={row} rowIndex={index} deliver={deliverClickIndex} key={index}></BoardRow>))
+  
+  const deliverChoiceBlock = () => {
+
+  }
+
+  const setBlock = (sRow, sCol) => {
+    let tempBoard = board
+    let settedBoard = switchBlocks(tempBoard, 5, sRow, sCol)
+    
+    setBoard([...settedBoard])
+  }
 
   return (
-    <div className="board">
-      {boardRowMap}
+    <div>
+      <div className="board">
+        {boardRowMap}
+      </div>
+      <div className="tray">
+        gen block here
+      </div>
     </div>
   );
 }

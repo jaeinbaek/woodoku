@@ -25,3 +25,10 @@
 .placed{
     background-color: crimson;
 }
+
+
+.tray {
+    background-color: darkgrey;
+    height: 200px;
+    width: 450px;
+  }
