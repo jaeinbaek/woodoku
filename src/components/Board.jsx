@@ -30,7 +30,14 @@ function Board() {
     let tempBoard = board
     let settedBoard = switchBlocks(tempBoard, 5, sRow, sCol)
     
-    setBoard([...settedBoard])
+    if (settedBoard == 0 ) {
+      console.log("nothing to do")
+    }
+    else if (typeof settedBoard == "object"){
+      setBoard([...settedBoard])
+    }
+    
+    
   }
 
   return (

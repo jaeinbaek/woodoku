@@ -3,14 +3,12 @@ function switchBlocks(tempBoard, blockCode, sRow, sCol) {
         // Horizotal 5 Length bar
         case 1:
             if (sCol > 4) {
-                console.log('outOfRange')
-                return
+                return 0
               }
             // Length Check
             for (let i = 0; i < 5; i++) {
                 if (tempBoard[sRow][sCol + i] === 1) {
-                    console.log('already setted')
-                    return
+                    return 0
                 }
             }
             // Set Bolock If Pass Every Tests
@@ -21,13 +19,11 @@ function switchBlocks(tempBoard, blockCode, sRow, sCol) {
         // Horizotal 3 Length bar
         case 2:
             if (sCol > 6) {
-                console.log('outOfRange')
-                return
+                return 0
               }
             for (let i = 0; i < 3; i++) {
                 if (tempBoard[sRow][sCol + i] === 1) {
-                    console.log('already setted')
-                    return
+                    return 0
                 }
             }
             // Set Bolock If Pass Every Tests
@@ -38,14 +34,12 @@ function switchBlocks(tempBoard, blockCode, sRow, sCol) {
         // Vertical 5 Length Bar
         case 3:
             if (sRow > 4) {
-                console.log('outOfRange')
-                return
+                return 0
             }
             // Length Check
             for (let i = 0; i < 5; i++) {
                 if (tempBoard[sRow + 1][sCol] === 1) {
-                    console.log('already setted')
-                    return
+                    return 0
                 }
             }
             // Set Bolock If Pass Every Tests
@@ -56,14 +50,12 @@ function switchBlocks(tempBoard, blockCode, sRow, sCol) {
         // Vertical 3 Length Bar
         case 4:
             if (sRow > 6) {
-                console.log('outOfRange')
-                return
+                return 0
             }
             // Length Check
             for (let i = 0; i < 3; i++) {
                 if (tempBoard[sRow + 1][sCol] === 1) {
-                    console.log('already setted')
-                    return
+                    return 0
                 }
             }
             // Set Bolock If Pass Every Tests
@@ -74,19 +66,16 @@ function switchBlocks(tempBoard, blockCode, sRow, sCol) {
         // 2X2 Square
         case 5:
             if (sRow > 7) {
-                console.log('outOfRange')
-                return
+                return 0
             }
             if (sCol > 7) {
-                console.log('outOfRange')
-                return
+                return 0
             }
             // Length Check
             for (let i = 0; i < 2; i++) {
                 for (let j = 0; j <= 1; j++) {
                     if (tempBoard[sRow + i][sCol + j] === 1) {
-                        console.log('already setted')
-                        return
+                        return 0
                     }
                 }
             }
