@@ -15,6 +15,7 @@ function create2DArray(row, col) {
 
 function Board() {
   const [board, setBoard] = useState(create2DArray(9, 9))
+  const [score, setScore] = useState(0)
   const [blockCode, setBlockCode] = useState(0)
 
   const deliverClickIndex = (row, col) => {
@@ -32,10 +33,60 @@ function Board() {
     }
     else if (typeof settedBoard == "object"){
       setBoard([...settedBoard])
+      checkScoreing()
     }
   }
 
+  // Clear blocks
+  const checkScoreing = () => {
+    console.log("scoreCheck")
+    let copyOfBoard = board
+    checkRow(copyOfBoard)
+    checkCol(copyOfBoard)
+    // check3by3(copyOfBoard)
+  }
 
+  const checkRow = (copyOfBoard) => {
+    for (let i = 0; i < 8; i++) {
+      let sumOfRow = 0;
+      for (let j = 0; j < 8; j++) {
+        sumOfRow += copyOfBoard[i][j] 
+      }
+      if (sumOfRow == 8) {
+        clearRow(i)
+      }
+    }
+  }
+
+  const clearRow = (row) => {
+    let copyOfBoard = board
+    for (let i = 0; i < copyOfBoard[row].length; i++) {
+      copyOfBoard[row][i] = 0
+    }
+    console.log(copyOfBoard)
+    setBoard([...copyOfBoard])
+  }
+
+  const checkCol = (copyOfBoard) => {
+    for (let i = 0; i < 8; i++) {
+      let sumOfRow = 0;
+      for (let j = 0; j < 8; j++) {
+        sumOfRow += copyOfBoard[i][j] 
+      }
+      if (sumOfRow == 8) {
+        clearRow(i)
+      }
+    }
+  }
+
+  const clearCol = (row) => {
+    let copyOfBoard = board
+    for (let i = 0; i < copyOfBoard[row].length; i++) {
+      copyOfBoard[row][i] = 0
+    }
+    console.log(copyOfBoard)
+    setBoard([...copyOfBoard])
+  }
 
 
   // temp
