@@ -15,7 +15,7 @@ function create2DArray(row, col) {
 
 function Board() {
   const [board, setBoard] = useState(create2DArray(9, 9))
-  const [score, setScore] = useState(0)
+  // const [score, setScore] = useState(0)
   const [blockCode, setBlockCode] = useState(0)
 
   const deliverClickIndex = (row, col) => {
@@ -28,7 +28,7 @@ function Board() {
     let tempBoard = board
     let settedBoard = switchBlocks(tempBoard, blockCode, sRow, sCol)
     
-    if (settedBoard == 0 ) {
+    if (settedBoard === 0 ) {
       console.log("nothing to do")
     }
     else if (typeof settedBoard == "object"){
@@ -39,55 +39,82 @@ function Board() {
 
   // Clear blocks
   const checkScoreing = () => {
-    console.log("scoreCheck")
     let copyOfBoard = board
     checkRow(copyOfBoard)
     checkCol(copyOfBoard)
-    // check3by3(copyOfBoard)
+    check3by3(copyOfBoard)
   }
 
   const checkRow = (copyOfBoard) => {
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 9; i++) {
       let sumOfRow = 0;
-      for (let j = 0; j < 8; j++) {
+      for (let j = 0; j < 9; j++) {
         sumOfRow += copyOfBoard[i][j] 
       }
-      if (sumOfRow == 8) {
+      if (sumOfRow === 9) {
         clearRow(i)
+      }
+    }
+  }
+
+  const checkCol = (copyOfBoard) => {
+    for (let i = 0; i < 9; i++) {
+      let sumOfCol = 0;
+      for (let j = 0; j < 9; j++) {
+        sumOfCol += copyOfBoard[j][i] 
+      }
+      if (sumOfCol === 9) {
+        clearCol(i)
+      }
+    }
+  }
+
+  // Board Zone Geo Code
+  const defGeo = {
+    1 : {1:0, 2:0, 3:2, 4:2}, 2 : {1:0, 2:3, 3:2, 4:5}, 3 : {1:0, 2:6, 3:2, 4:8},
+    4 : {1:3, 2:0, 3:5, 4:2}, 5 : {1:3, 2:3, 3:5, 4:5}, 6 : {1:3, 2:6, 3:5, 4:8},
+    7 : {1:6, 2:0, 3:8, 4:2}, 8 : {1:6, 2:3, 3:8, 4:5}, 9 : {1:6, 2:6, 3:8, 4:8}
+  }
+
+  const check3by3 = (copyOfBoard) => {
+    for (let i = 1; i < 10; i++) {
+      let sumOfSquare = 0;
+      for (let j = defGeo[i][1]; j <= defGeo[i][3]; j++) {
+        for (let k = defGeo[i][2]; k <= defGeo[i][4]; k++) {
+          sumOfSquare += copyOfBoard[j][k] 
+        }
+        if (sumOfSquare === 9) {
+          clear3by3(i)
+        }
       }
     }
   }
 
   const clearRow = (row) => {
     let copyOfBoard = board
-    for (let i = 0; i < copyOfBoard[row].length; i++) {
+    for (let i = 0; i < 9; i++) {
       copyOfBoard[row][i] = 0
     }
-    console.log(copyOfBoard)
     setBoard([...copyOfBoard])
   }
-
-  const checkCol = (copyOfBoard) => {
-    for (let i = 0; i < 8; i++) {
-      let sumOfRow = 0;
-      for (let j = 0; j < 8; j++) {
-        sumOfRow += copyOfBoard[i][j] 
-      }
-      if (sumOfRow == 8) {
-        clearRow(i)
-      }
-    }
-  }
-
-  const clearCol = (row) => {
+  
+  const clearCol = (col) => {
     let copyOfBoard = board
-    for (let i = 0; i < copyOfBoard[row].length; i++) {
-      copyOfBoard[row][i] = 0
+    for (let i = 0; i < 9; i++) {
+      copyOfBoard[i][col] = 0
     }
-    console.log(copyOfBoard)
     setBoard([...copyOfBoard])
   }
 
+  const clear3by3 = (geoCode) => {
+    let copyOfBoard = board
+    for (let j = defGeo[geoCode][1]; j <= defGeo[geoCode][3]; j++) {
+      for (let k = defGeo[geoCode][2]; k <= defGeo[geoCode][4]; k++) {
+        copyOfBoard[j][k] = 0
+      }
+    }
+    setBoard([...copyOfBoard])
+  }
 
   // temp
   const passingBlockcode1 = () => {
