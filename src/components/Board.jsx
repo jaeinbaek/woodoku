@@ -15,7 +15,7 @@ function create2DArray(row, col) {
 
 function Board() {
   const [board, setBoard] = useState(create2DArray(9, 9))
-  // const [score, setScore] = useState(0)
+  const [score, setScore] = useState(0)
   const [blockCode, setBlockCode] = useState(0)
 
   const deliverClickIndex = (row, col) => {
@@ -40,43 +40,42 @@ function Board() {
   // Clear blocks
   const checkScoreing = () => {
     let copyOfBoard = board
-    checkRow(copyOfBoard)
-    checkCol(copyOfBoard)
-    check3by3(copyOfBoard)
+    checkToClear(copyOfBoard)
   }
 
-  const checkRow = (copyOfBoard) => {
+  // Board Zone Geo Code
+  const defGeo = {
+    1: {1:0, 2:0, 3:2, 4:2}, 2: {1:0, 2:3, 3:2, 4:5}, 3: {1:0, 2:6, 3:2, 4:8},
+    4: {1:3, 2:0, 3:5, 4:2}, 5: {1:3, 2:3, 3:5, 4:5}, 6: {1:3, 2:6, 3:5, 4:8},
+    7: {1:6, 2:0, 3:8, 4:2}, 8: {1:6, 2:3, 3:8, 4:5}, 9: {1:6, 2:6, 3:8, 4:8}
+  }
+
+  const checkToClear = (copyOfBoard) => {
+    let toClear = {
+      row: [],
+      col: [],
+      sqr: []
+    }
     for (let i = 0; i < 9; i++) {
       let sumOfRow = 0;
       for (let j = 0; j < 9; j++) {
         sumOfRow += copyOfBoard[i][j] 
       }
       if (sumOfRow === 9) {
-        clearRow(i)
+        toClear.row.push(i)
       }
     }
-  }
 
-  const checkCol = (copyOfBoard) => {
     for (let i = 0; i < 9; i++) {
       let sumOfCol = 0;
       for (let j = 0; j < 9; j++) {
         sumOfCol += copyOfBoard[j][i] 
       }
       if (sumOfCol === 9) {
-        clearCol(i)
+        toClear.col.push(i)
       }
     }
-  }
 
-  // Board Zone Geo Code
-  const defGeo = {
-    1 : {1:0, 2:0, 3:2, 4:2}, 2 : {1:0, 2:3, 3:2, 4:5}, 3 : {1:0, 2:6, 3:2, 4:8},
-    4 : {1:3, 2:0, 3:5, 4:2}, 5 : {1:3, 2:3, 3:5, 4:5}, 6 : {1:3, 2:6, 3:5, 4:8},
-    7 : {1:6, 2:0, 3:8, 4:2}, 8 : {1:6, 2:3, 3:8, 4:5}, 9 : {1:6, 2:6, 3:8, 4:8}
-  }
-
-  const check3by3 = (copyOfBoard) => {
     for (let i = 1; i < 10; i++) {
       let sumOfSquare = 0;
       for (let j = defGeo[i][1]; j <= defGeo[i][3]; j++) {
@@ -84,35 +83,37 @@ function Board() {
           sumOfSquare += copyOfBoard[j][k] 
         }
         if (sumOfSquare === 9) {
-          clear3by3(i)
+          toClear.sqr.push(i)
         }
       }
     }
+    clearBoard(toClear)
   }
 
-  const clearRow = (row) => {
+  const clearBoard = (toClear) => {
     let copyOfBoard = board
-    for (let i = 0; i < 9; i++) {
-      copyOfBoard[row][i] = 0
-    }
-    setBoard([...copyOfBoard])
-  }
-  
-  const clearCol = (col) => {
-    let copyOfBoard = board
-    for (let i = 0; i < 9; i++) {
-      copyOfBoard[i][col] = 0
-    }
-    setBoard([...copyOfBoard])
-  }
-
-  const clear3by3 = (geoCode) => {
-    let copyOfBoard = board
-    for (let j = defGeo[geoCode][1]; j <= defGeo[geoCode][3]; j++) {
-      for (let k = defGeo[geoCode][2]; k <= defGeo[geoCode][4]; k++) {
-        copyOfBoard[j][k] = 0
+    let scoreByAction = 0
+    for (let rmRow of toClear.row){
+      for (let i = 0; i < 9; i++) {
+        copyOfBoard[rmRow][i] = 0
+        scoreByAction ++
       }
     }
+    for (let rmCol of toClear.col){ 
+      for (let i = 0; i < 9; i++) {
+        copyOfBoard[i][rmCol] = 0
+        scoreByAction ++
+      }
+    }
+    for (let rmSqr of toClear.sqr){
+      for (let j = defGeo[rmSqr][1]; j <= defGeo[rmSqr][3]; j++) {
+        for (let k = defGeo[rmSqr][2]; k <= defGeo[rmSqr][4]; k++) {
+          copyOfBoard[j][k] = 0
+          scoreByAction ++
+        }
+      }
+    }
+    setScore(score + scoreByAction)
     setBoard([...copyOfBoard])
   }
 
@@ -140,6 +141,8 @@ function Board() {
 
   return (
     <div>
+      <div className="score">
+      </div>
       <div className="board">
         {boardRowMap}
       </div>

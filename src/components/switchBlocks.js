@@ -38,7 +38,7 @@ function switchBlocks(tempBoard, blockCode, sRow, sCol) {
             }
             // Length Check
             for (let i = 0; i < 5; i++) {
-                if (tempBoard[sRow + 1][sCol] === 1) {
+                if (tempBoard[sRow + i][sCol] === 1) {
                     return 0
                 }
             }
@@ -54,7 +54,7 @@ function switchBlocks(tempBoard, blockCode, sRow, sCol) {
             }
             // Length Check
             for (let i = 0; i < 3; i++) {
-                if (tempBoard[sRow + 1][sCol] === 1) {
+                if (tempBoard[sRow + i][sCol] === 1) {
                     return 0
                 }
             }
