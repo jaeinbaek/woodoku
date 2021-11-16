@@ -142,6 +142,7 @@ function Board() {
   return (
     <div>
       <div className="score">
+        {score}
       </div>
       <div className="board">
         {boardRowMap}
