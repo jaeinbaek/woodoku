@@ -28,6 +28,7 @@ function Board() {
   const [board, setBoard] = useState(create2DArray(9, 9))
   const [score, setScore] = useState(0)
   const [blockCode, setBlockCode] = useState(0)
+  const [blockIndexInTrayArr, setBlockIndexInTrayArr] = useState(0)
   const [trayBlockArr, setTrayBlockArr] = useState(createRandomTray())
 
   const deliverClickIndex = (row, col) => {
@@ -35,7 +36,7 @@ function Board() {
   }
 
   const boardRowMap = board.map((row, index) => (<BoardRow value={row} rowIndex={index} deliver={deliverClickIndex} key={index}></BoardRow>))
-  const trayBlockMap = trayBlockArr.map((blockCode, index) => (<TrayBlock blockCode={blockCode} codeDeliver={setBlockCode} key={index}></TrayBlock>))
+  const trayBlockMap = trayBlockArr.map((blockCode, index) => (<TrayBlock blockCode={blockCode} codeDeliver={setBlockCode} indexDeliver={setBlockIndexInTrayArr} trayIndex={index} key={index}></TrayBlock>))
 
   const setBlock = (sRow, sCol) => {
     let tempBoard = board
@@ -46,17 +47,28 @@ function Board() {
     }
     else if (typeof settedBoard == "object"){
       setBoard([...settedBoard])
-      checkScoreing()
+      checkerAfterBlockSet()
     }
   }
 
   // Clear blocks
-  const checkScoreing = () => {
+  const checkerAfterBlockSet = () => {
     let copyOfBoard = board
     checkToClear(copyOfBoard)
+    
+    trayBlockArr.splice(blockIndexInTrayArr, 1, 0)
+
+    // check blockTray empty
+    let sumOfTray = 0
+    for (let i = 0; i < 3; i++) {
+      sumOfTray += trayBlockArr[i]
+    }
+    if ( sumOfTray === 0 ) {
+      changeRandomTray()
+    }
   }
 
-  // Board Zone Geo Code
+  // Board Zone Geo Code (3*3 zone)
   const defGeo = {
     1: {1:0, 2:0, 3:2, 4:2}, 2: {1:0, 2:3, 3:2, 4:5}, 3: {1:0, 2:6, 3:2, 4:8},
     4: {1:3, 2:0, 3:5, 4:2}, 5: {1:3, 2:3, 3:5, 4:5}, 6: {1:3, 2:6, 3:5, 4:8},
@@ -129,11 +141,6 @@ function Board() {
     setScore(score + scoreByAction)
     setBoard([...copyOfBoard])
   }
-  
-
-  const manageTray = () => {
-
-  }
 
   // Function for random tray
   function changeRandomTray() {
@@ -156,7 +163,6 @@ function Board() {
       </div>
       <div className="tray">
         {trayBlockMap}
-        {/* <div className="trayBlockArea" onClick={changeRandomTray}>1 || Horizotal 5 Length bar</div> */}
       </div>
     </div>
   );
