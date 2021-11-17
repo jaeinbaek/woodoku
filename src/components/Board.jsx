@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import BoardRow from './BoardRow';
 import switchBlocks from './switchBlocks.js';
+import TrayBlock from './TrayBlock';
 
 
 // Function for declare board
@@ -12,18 +13,30 @@ function create2DArray(row, col) {
   }
   return arr;
 }
-
+// Function for genarate random tray
+function createRandomTray() {
+  let tempArr = []
+  const min = Math.ceil(1)
+  const max = Math.floor(5)
+  for (let i = 1; i <= 3; i++) {
+    tempArr.push(Math.floor(Math.random() * (max - min + 1)) + min)
+  }
+  return tempArr
+}
+  
 function Board() {
   const [board, setBoard] = useState(create2DArray(9, 9))
   const [score, setScore] = useState(0)
   const [blockCode, setBlockCode] = useState(0)
+  const [trayBlockArr, setTrayBlockArr] = useState(createRandomTray())
 
   const deliverClickIndex = (row, col) => {
     setBlock(row, col)
   }
 
   const boardRowMap = board.map((row, index) => (<BoardRow value={row} rowIndex={index} deliver={deliverClickIndex} key={index}></BoardRow>))
-  
+  const trayBlockMap = trayBlockArr.map((blockCode, index) => (<TrayBlock blockCode={blockCode} codeDeliver={setBlockCode} key={index}></TrayBlock>))
+
   const setBlock = (sRow, sCol) => {
     let tempBoard = board
     let settedBoard = switchBlocks(tempBoard, blockCode, sRow, sCol)
@@ -116,27 +129,21 @@ function Board() {
     setScore(score + scoreByAction)
     setBoard([...copyOfBoard])
   }
+  
 
-  // temp
-  const passingBlockcode1 = () => {
-    console.log("block setted (1)")
-    setBlockCode(1)
+  const manageTray = () => {
+
   }
-  const passingBlockcode2 = () => {
-    console.log("block setted (2)")
-    setBlockCode(2)
-  }
-  const passingBlockcode3 = () => {
-    console.log("block setted (3)")
-    setBlockCode(3)
-  }
-  const passingBlockcode4 = () => {
-    console.log("block setted (4)")
-    setBlockCode(4)
-  }
-  const passingBlockcode5 = () => {
-    console.log("block setted (5)")
-    setBlockCode(5)
+
+  // Function for random tray
+  function changeRandomTray() {
+    let tempArr = []
+    const min = Math.ceil(1)
+    const max = Math.floor(5)
+    for (let i = 1; i <= 3; i++) {
+      tempArr.push(Math.floor(Math.random() * (max - min + 1)) + min)
+    }
+    setTrayBlockArr(tempArr)
   }
 
   return (
@@ -148,12 +155,8 @@ function Board() {
         {boardRowMap}
       </div>
       <div className="tray">
-        {/* temp */}
-        <div className="tempBtn" onClick={passingBlockcode1}>1 || Horizotal 5 Length bar</div>
-        <div className="tempBtn" onClick={passingBlockcode2}>2 || Horizotal 3 Length bar</div>
-        <div className="tempBtn" onClick={passingBlockcode3}>3 || Vertical 5 Length Bar</div>
-        <div className="tempBtn" onClick={passingBlockcode4}>4 || Vertical 3 Length Bar</div>
-        <div className="tempBtn" onClick={passingBlockcode5}>5 || 2X2 Square</div>
+        {trayBlockMap}
+        {/* <div className="trayBlockArea" onClick={changeRandomTray}>1 || Horizotal 5 Length bar</div> */}
       </div>
     </div>
   );
