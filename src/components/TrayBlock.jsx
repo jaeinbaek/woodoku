@@ -1,11 +1,12 @@
-function TrayBlock({blockCode, codeDeliver}) {
-    const setBlockCode = () => {
+function TrayBlock({blockCode, codeDeliver, indexDeliver, trayIndex}) {
+    const setBlockInfo = () => {
         codeDeliver(blockCode)
+        indexDeliver(trayIndex)
     }
   return (
     <div 
         className="trayBlockArea"
-        onClick={setBlockCode}
+        onClick={setBlockInfo}
     >
         {blockCode}
     </div>
