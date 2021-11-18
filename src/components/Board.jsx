@@ -166,6 +166,7 @@ function Board() {
         // for each col
         for (let k = 0; k < 9; k++) {
           if ( board[j][k] === 0 ) {
+            console.log(trayBlockArr[i])
             setCount += simulateBlockSet(board, trayBlockArr[i], j, k)
           } 
         }
@@ -185,7 +186,6 @@ function Board() {
     if ( blockCode !== 0 ) {
       simSettedBoard = simSwitchBlocks(simBoard, blockCode, sRow, sCol)
     }
-    console.log(simSettedBoard)
     if (simSettedBoard === 0 ) {
       return 0
     }
