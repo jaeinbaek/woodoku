@@ -9,14 +9,14 @@
     justify-content: space-around;
 }
 
-.board_row{
+.board-row{
     height: 40px;
     width: 100%;
     display: flex;
     justify-content: space-around;
 }
 
-.board_col{
+.board-col{
     height: 100%;
     width: 40px;
     background-color: dodgerblue;
@@ -39,11 +39,28 @@
     flex-direction: row;
 }
 
-.trayBlockArea {
+.tray-block-area {
     text-align: center;
     width: 134px;
     height: 134px;
     margin-top: 30px;
     margin-left: 12px;
     background-color: #555555;
+}
+
+.block-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tray-block-row{
+    display: flex;
+    flex-direction: row;
+    height: 25px;
+}
+
+.tray-block{
+    width: 25px;
+    background-color: skyblue;
 }

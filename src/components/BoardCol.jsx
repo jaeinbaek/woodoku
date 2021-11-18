@@ -1,15 +1,13 @@
 function BoardCol({value, rowIndex, colIndex, deliver}) {
 
-  const test = () => {
-    // console.log(props.rowIndex)
-    // console.log(props.colIndex)
+  const deliverFunc = () => {
     deliver(rowIndex, colIndex)
   }
 
     return (
       <div 
-        className={value === 0 ? "board_col" : "board_col placed"}
-        onClick={test}
+        className={value === 0 ? "board-col" : "board-col placed"}
+        onClick={deliverFunc}
       >
         {value}
       </div>

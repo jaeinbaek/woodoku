@@ -1,14 +1,17 @@
+import RenderBlocks from "./RenderBlocks"
+
 function TrayBlock({blockCode, codeDeliver, indexDeliver, trayIndex}) {
     const setBlockInfo = () => {
         codeDeliver(blockCode)
         indexDeliver(trayIndex)
     }
+
   return (
     <div 
-        className="trayBlockArea"
+        className="tray-block-area"
         onClick={setBlockInfo}
     >
-        {blockCode}
+        <RenderBlocks blockCode={blockCode}></RenderBlocks>
     </div>
   );
 }

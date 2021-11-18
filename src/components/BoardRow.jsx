@@ -5,7 +5,7 @@ function BoardRow({value, rowIndex, deliver}) {
 
   return (
     <div 
-      className="board_row"
+      className="board-row"
     >
       {boardColMap}
     </div>

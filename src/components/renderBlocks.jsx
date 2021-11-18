@@ -1,6 +1,11 @@
-function renderBlocks(blockCode) {
+import RenderBlockRow from "./RenderBlockRow";
+
+function renderBlocks({blockCode}) {
 
     const defBlocks = {
+        0: {
+
+        },
         1: {
             1: [1, 1, 1, 1, 1]
         },
@@ -24,14 +29,12 @@ function renderBlocks(blockCode) {
             2: [1, 1],
         }
     }
-
-    for (let i of defBlocks[blockCode]) {
-        
-    }
-
-
+    
+    const blockRowMap = Object.values(defBlocks[blockCode]).map((row, index) => (<RenderBlockRow value={row} key={index}></RenderBlockRow>))
+    
     return (
-        <div>
+        <div className="block-wrap">
+            {blockRowMap}
         </div>
     );
 }
