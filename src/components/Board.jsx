@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import BoardRow from './BoardRow';
 import switchBlocks from './switchBlocks.js';
+import simSwitchBlocks from './simSwitchBlocks.js';
 import TrayBlock from './TrayBlock';
 
 
@@ -41,7 +42,6 @@ function Board() {
   const setBlock = (sRow, sCol) => {
     let tempBoard = board
     let settedBoard = switchBlocks(tempBoard, blockCode, sRow, sCol)
-    
     if (settedBoard === 0 ) {
       console.log("nothing to do")
     }
@@ -51,7 +51,7 @@ function Board() {
     }
   }
 
-  // Clear blocks
+  // Action After Block Set
   const checkerAfterBlockSet = () => {
     let copyOfBoard = board
     checkToClear(copyOfBoard)
@@ -66,6 +66,8 @@ function Board() {
     if ( sumOfTray === 0 ) {
       changeRandomTray()
     }
+    // Simulate game
+    simulateTray()
   }
 
   // Board Zone Geo Code (3*3 zone)
@@ -74,7 +76,7 @@ function Board() {
     4: {1:3, 2:0, 3:5, 4:2}, 5: {1:3, 2:3, 3:5, 4:5}, 6: {1:3, 2:6, 3:5, 4:8},
     7: {1:6, 2:0, 3:8, 4:2}, 8: {1:6, 2:3, 3:8, 4:5}, 9: {1:6, 2:6, 3:8, 4:8}
   }
-
+  // Check Cell to Clear
   const checkToClear = (copyOfBoard) => {
     let toClear = {
       row: [],
@@ -151,6 +153,45 @@ function Board() {
       tempArr.push(Math.floor(Math.random() * (max - min + 1)) + min)
     }
     setTrayBlockArr(tempArr)
+  }
+
+  const simulateTray = () => {
+    let setCount = 0
+    // for each tray block
+    for (let i = 0; i < trayBlockArr.length; i++) {
+
+      // for each row 
+      for (let j = 0; j < 9; j++) {
+
+        // for each col
+        for (let k = 0; k < 9; k++) {
+          if ( board[j][k] === 0 ) {
+            setCount += simulateBlockSet(board, trayBlockArr[i], j, k)
+          } 
+        }
+      }
+      
+    }
+    if ( setCount === 0 ) {
+      console.error('gameover')
+    }
+    else {
+      console.log('pass')
+    }
+  }
+
+  const simulateBlockSet = (simBoard, blockCode, sRow, sCol) => {
+    let simSettedBoard = 0
+    if ( blockCode !== 0 ) {
+      simSettedBoard = simSwitchBlocks(simBoard, blockCode, sRow, sCol)
+    }
+    console.log(simSettedBoard)
+    if (simSettedBoard === 0 ) {
+      return 0
+    }
+    else if (simSettedBoard === 1){
+      return 1
+    }
   }
 
   return (
