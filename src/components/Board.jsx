@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BoardRow from './BoardRow';
 import switchBlocks from './switchBlocks.js';
 import simSwitchBlocks from './simSwitchBlocks.js';
@@ -31,6 +31,11 @@ function Board() {
   const [blockCode, setBlockCode] = useState(0)
   const [blockIndexInTrayArr, setBlockIndexInTrayArr] = useState(0)
   const [trayBlockArr, setTrayBlockArr] = useState(createRandomTray())
+
+  useEffect(() => {
+    // Simulate tray after change that
+    simulateTray()
+  }, [trayBlockArr]);
 
   const deliverClickIndex = (row, col) => {
     setBlock(row, col)
@@ -153,31 +158,39 @@ function Board() {
       tempArr.push(Math.floor(Math.random() * (max - min + 1)) + min)
     }
     setTrayBlockArr(tempArr)
+
   }
 
   const simulateTray = () => {
     let setCount = 0
+    let emptyTrayCount = 0
     // for each tray block
     for (let i = 0; i < trayBlockArr.length; i++) {
-
-      // for each row 
-      for (let j = 0; j < 9; j++) {
-
-        // for each col
-        for (let k = 0; k < 9; k++) {
-          if ( board[j][k] === 0 ) {
-            console.log(trayBlockArr[i])
-            setCount += simulateBlockSet(board, trayBlockArr[i], j, k)
-          } 
+      if ( trayBlockArr[i] !== 0 ) {
+        // for each row 
+        for (let j = 0; j < 9; j++) {
+  
+          // for each col
+          for (let k = 0; k < 9; k++) {
+            if ( board[j][k] === 0 ) {
+              console.log(trayBlockArr[i])
+              setCount += simulateBlockSet(board, trayBlockArr[i], j, k)
+            } 
+          }
         }
       }
-      
+      else if ( trayBlockArr[i] === 0 ) {
+        emptyTrayCount ++
+      }
     }
-    if ( setCount === 0 ) {
+    if ( setCount === 0 && emptyTrayCount === 3) {
+      console.log(setCount + 'but tray empty pass')
+    }
+    else if (setCount === 0 ){
       console.error('gameover')
     }
-    else {
-      console.log('pass')
+    else if (setCount !== 0 ){
+      console.log(setCount + 'pass')
     }
   }
 
@@ -185,11 +198,11 @@ function Board() {
     let simSettedBoard = 0
     if ( blockCode !== 0 ) {
       simSettedBoard = simSwitchBlocks(simBoard, blockCode, sRow, sCol)
-    }
-    if (simSettedBoard === 0 ) {
+    } 
+    if ( simSettedBoard === 0 ) {
       return 0
     }
-    else if (simSettedBoard === 1){
+    else if ( simSettedBoard === 1 ){
       return 1
     }
   }
@@ -197,7 +210,7 @@ function Board() {
   return (
     <div>
       <div className="score">
-        {score}
+        score : {score}
       </div>
       <div className="board">
         {boardRowMap}
