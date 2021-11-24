@@ -19,7 +19,7 @@
 .board-col{
     height: 100%;
     width: 40px;
-    border-radius: 5px;
+    border-radius: 3px;
     background-color: #3d3d3d;
 }
 
@@ -71,7 +71,7 @@
 
 .tray-block{
     width: 25px;
-    border-radius: 3px;
+    border-radius: 2px;
     margin-left: 3px;
     margin-bottom: 3px;
     background-color: #F23351;
