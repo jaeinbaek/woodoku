@@ -1,5 +1,7 @@
 html, body {
   height: 100%;
+  font-family: 'Noto Sans', sans-serif;
+  background-color: #2d2d2d;
 }
 
 #root {
@@ -15,10 +17,16 @@ html, body {
   width: 450px;
   margin-left: auto;
   margin-right: auto;
-  background-color: gray;
+  background-color: #2d2d2d;
 }
 
 .score {
   height: 150px;
   width: 100%;
+  color: white;
+  font-size: x-large;
+  text-align: center;
+}
+
+.score-text {
 }

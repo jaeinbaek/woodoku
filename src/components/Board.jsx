@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import BoardRow from './BoardRow';
+import TrayBlock from './TrayBlock';
 import switchBlocks from './switchBlocks.js';
 import simSwitchBlocks from './simSwitchBlocks.js';
-import TrayBlock from './TrayBlock';
 
 
 // Function for declare board
@@ -60,9 +60,7 @@ function Board() {
   const checkerAfterBlockSet = () => {
     let copyOfBoard = board
     checkToClear(copyOfBoard)
-    
     trayBlockArr.splice(blockIndexInTrayArr, 1, 0)
-
     // check blockTray empty
     let sumOfTray = 0
     for (let i = 0; i < 3; i++) {
@@ -97,7 +95,6 @@ function Board() {
         toClear.row.push(i)
       }
     }
-
     for (let i = 0; i < 9; i++) {
       let sumOfCol = 0;
       for (let j = 0; j < 9; j++) {
@@ -107,7 +104,6 @@ function Board() {
         toClear.col.push(i)
       }
     }
-
     for (let i = 1; i < 10; i++) {
       let sumOfSquare = 0;
       for (let j = defGeo[i][1]; j <= defGeo[i][3]; j++) {
@@ -154,11 +150,10 @@ function Board() {
     let tempArr = []
     const min = Math.ceil(1)
     const max = Math.floor(5)
-    for (let i = 1; i <= 3; i++) {
+    for (let i = 1; i <= 3; i++) {  
       tempArr.push(Math.floor(Math.random() * (max - min + 1)) + min)
     }
     setTrayBlockArr(tempArr)
-
   }
 
   const simulateTray = () => {
@@ -169,7 +164,6 @@ function Board() {
       if ( trayBlockArr[i] !== 0 ) {
         // for each row 
         for (let j = 0; j < 9; j++) {
-  
           // for each col
           for (let k = 0; k < 9; k++) {
             if ( board[j][k] === 0 ) {
@@ -210,7 +204,9 @@ function Board() {
   return (
     <div>
       <div className="score">
-        score : {score}
+        <div className="score-text">
+        {score}
+        </div>
       </div>
       <div className="board">
         {boardRowMap}

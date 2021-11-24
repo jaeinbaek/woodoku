@@ -3,7 +3,7 @@
     height: 400px;
     padding-left: 25px;
     padding-right: 25px;
-    background-color: lightgrey;
+    background-color: #2d2d2d;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -19,16 +19,24 @@
 .board-col{
     height: 100%;
     width: 40px;
-    background-color: dodgerblue;
+    border-radius: 5px;
+    background-color: #3d3d3d;
+}
+
+.board-col-bright{
+    height: 100%;
+    width: 40px;
+    border-radius: 5px;
+    background-color: #4d4d4d;
 }
 
 .placed{
-    background-color: crimson;
+    background-color: #F23351;
 }
 
 
 .tray {
-    background-color: darkgrey;
+    background-color: #2d2d2d;
     height: 200px;
     width: 450px;
   }
@@ -45,7 +53,7 @@
     height: 134px;
     margin-top: 30px;
     margin-left: 12px;
-    background-color: #555555;
+    background-color: #2d2d2d;
 }
 
 .block-wrap {
@@ -58,9 +66,13 @@
     display: flex;
     flex-direction: row;
     height: 25px;
+    justify-content: center;
 }
 
 .tray-block{
     width: 25px;
-    background-color: skyblue;
+    border-radius: 3px;
+    margin-left: 3px;
+    margin-bottom: 3px;
+    background-color: #F23351;
 }

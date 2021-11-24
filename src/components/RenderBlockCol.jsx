@@ -3,7 +3,6 @@ function RenderBlockCol({value}) {
       <div 
         className={value === 0 ? "tray-block" : "tray-block placed"}
       >
-        {value}
       </div>
     );
   }
