@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/woodoku/static/css/main.43cec8ee.chunk.css",
+    "main.js": "/woodoku/static/js/main.f2bd85a7.chunk.js",
+    "main.js.map": "/woodoku/static/js/main.f2bd85a7.chunk.js.map",
+    "runtime-main.js": "/woodoku/static/js/runtime-main.8e5353a5.js",
+    "runtime-main.js.map": "/woodoku/static/js/runtime-main.8e5353a5.js.map",
+    "static/js/2.ee46e0c7.chunk.js": "/woodoku/static/js/2.ee46e0c7.chunk.js",
+    "static/js/2.ee46e0c7.chunk.js.map": "/woodoku/static/js/2.ee46e0c7.chunk.js.map",
+    "static/js/3.0134db35.chunk.js": "/woodoku/static/js/3.0134db35.chunk.js",
+    "static/js/3.0134db35.chunk.js.map": "/woodoku/static/js/3.0134db35.chunk.js.map",
+    "index.html": "/woodoku/index.html",
+    "static/css/main.43cec8ee.chunk.css.map": "/woodoku/static/css/main.43cec8ee.chunk.css.map",
+    "static/js/2.ee46e0c7.chunk.js.LICENSE.txt": "/woodoku/static/js/2.ee46e0c7.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8e5353a5.js",
+    "static/js/2.ee46e0c7.chunk.js",
+    "static/css/main.43cec8ee.chunk.css",
+    "static/js/main.f2bd85a7.chunk.js"
+  ]
+}
