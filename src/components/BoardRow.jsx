@@ -1,8 +1,8 @@
 import BoardCol from "./BoardCol";
 
-function BoardRow({value, rowIndex, deliver}) {
+function BoardRow({value, rowIndex, deliverClickIndex, deliverMouserOverIndex}) {
 
-  const boardColMap = value.map((col, index) => (<BoardCol value={col} rowIndex={rowIndex} colIndex={index} deliver={deliver} key={index}></BoardCol>))
+  const boardColMap = value.map((col, index) => (<BoardCol value={col} rowIndex={rowIndex} colIndex={index} deliverClickIndex={deliverClickIndex} deliverMouserOverIndex={deliverMouserOverIndex} key={index}></BoardCol>))
 
   return (
     <div 

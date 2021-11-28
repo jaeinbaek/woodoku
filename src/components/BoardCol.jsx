@@ -1,15 +1,22 @@
-function BoardCol({value, rowIndex, colIndex, deliver}) {
+function BoardCol({value, rowIndex, colIndex, deliverClickIndex, deliverMouserOverIndex}) {
 
-  const deliverFunc = () => {
-    deliver(rowIndex, colIndex)
+  const deliverClickFunc = () => {
+    deliverClickIndex(rowIndex, colIndex)
   }
+
+  const deliverOverFunc = (e) => {
+    deliverMouserOverIndex(rowIndex, colIndex, e.type)
+  }
+
     // For 3*3 Checkerboard pattern (CSS class)
     if ( rowIndex === 3 || rowIndex === 4 || rowIndex === 5  ) {
       if ( colIndex === 3 || colIndex === 4 || colIndex === 5  ) {
         return (
           <div 
-            className={value === 0 ? "board-col" : "board-col placed"}
-            onClick={deliverFunc}
+            className={value === 0 ? "board-col" : value === 1 ? "board-col placed" : "board-col overlay"}
+            onClick={deliverClickFunc}
+            onMouseOver={deliverOverFunc}
+            onMouseLeave={deliverOverFunc}
           >
           </div>
         );
@@ -17,8 +24,10 @@ function BoardCol({value, rowIndex, colIndex, deliver}) {
       else {
         return (
           <div 
-            className={value === 0 ? "board-col-bright" : "board-col placed"}
-            onClick={deliverFunc}
+            className={value === 0 ? "board-col-bright" : value === 1 ? "board-col placed" : "board-col overlay"}
+            onClick={deliverClickFunc}
+            onMouseOver={deliverOverFunc}
+            onMouseLeave={deliverOverFunc}
           >
           </div>
         );
@@ -28,8 +37,10 @@ function BoardCol({value, rowIndex, colIndex, deliver}) {
       if ( colIndex === 0 || colIndex === 1 || colIndex === 2 || colIndex === 6 || colIndex === 7 || colIndex === 8  ) {
         return (
           <div 
-            className={value === 0 ? "board-col" : "board-col placed"}
-            onClick={deliverFunc}
+            className={value === 0 ? "board-col" : value === 1 ? "board-col placed" : "board-col overlay"}
+            onClick={deliverClickFunc}
+            onMouseOver={deliverOverFunc}
+            onMouseLeave={deliverOverFunc}
           >
           </div>
         );
@@ -37,8 +48,10 @@ function BoardCol({value, rowIndex, colIndex, deliver}) {
       else {
         return (
           <div 
-            className={value === 0 ? "board-col-bright" : "board-col placed"}
-            onClick={deliverFunc}
+            className={value === 0 ? "board-col-bright" : value === 1 ? "board-col placed" : "board-col overlay"}
+            onClick={deliverClickFunc}
+            onMouseOver={deliverOverFunc}
+            onMouseLeave={deliverOverFunc}
           >
           </div>
         );

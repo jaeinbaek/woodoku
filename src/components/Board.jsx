@@ -3,6 +3,7 @@ import BoardRow from './BoardRow';
 import TrayBlock from './TrayBlock';
 import switchBlocks from './switchBlocks.js';
 import simSwitchBlocks from './simSwitchBlocks.js';
+import overlaySwitchBlocks from './overlaySwitchBlocks.js';
 
 
 // Function for declare board
@@ -31,6 +32,7 @@ function Board() {
   const [blockCode, setBlockCode] = useState(0)
   const [blockIndexInTrayArr, setBlockIndexInTrayArr] = useState(0)
   const [trayBlockArr, setTrayBlockArr] = useState(createRandomTray())
+  const [overlayBoard, setOverlayBoard] = useState()
 
   useEffect(() => {
     // Simulate tray after change that
@@ -41,7 +43,11 @@ function Board() {
     setBlock(row, col)
   }
 
-  const boardRowMap = board.map((row, index) => (<BoardRow value={row} rowIndex={index} deliver={deliverClickIndex} key={index}></BoardRow>))
+  const deliverMouserOverIndex = (row, col, status) => {
+    overlayBlock(row, col, status)
+  }
+
+  const boardRowMap = board.map((row, index) => (<BoardRow value={row} rowIndex={index} deliverClickIndex={deliverClickIndex} deliverMouserOverIndex={deliverMouserOverIndex} key={index}></BoardRow>))
   const trayBlockMap = trayBlockArr.map((blockCode, index) => (<TrayBlock blockCode={blockCode} codeDeliver={setBlockCode} indexDeliver={setBlockIndexInTrayArr} trayIndex={index} key={index}></TrayBlock>))
 
   const setBlock = (sRow, sCol) => {
@@ -52,7 +58,28 @@ function Board() {
     }
     else if (typeof settedBoard == "object"){
       setBoard([...settedBoard])
+      setBlockCode(0)
       checkerAfterBlockSet()
+    }
+  }
+
+  // Mouse over
+  const overlayBlock = (sRow, sCol, status) => {
+    let settedBoard = ''
+    switch (status) {
+      case 'mouseover':
+        setOverlayBoard(board)
+        settedBoard = overlaySwitchBlocks(board, blockCode, sRow, sCol)
+        if (typeof settedBoard === "object"){
+          setBoard([...settedBoard])
+        }
+        break;
+      case 'mouseleave':
+        console.log('mouseLeave')
+        setBoard([...overlayBoard])
+        break;
+      default:
+        break;
     }
   }
 
@@ -167,7 +194,6 @@ function Board() {
           // for each col
           for (let k = 0; k < 9; k++) {
             if ( board[j][k] === 0 ) {
-              console.log(trayBlockArr[i])
               setCount += simulateBlockSet(board, trayBlockArr[i], j, k)
             } 
           }
@@ -178,13 +204,11 @@ function Board() {
       }
     }
     if ( setCount === 0 && emptyTrayCount === 3) {
-      console.log(setCount + 'but tray empty pass')
     }
     else if (setCount === 0 ){
       console.error('gameover')
     }
     else if (setCount !== 0 ){
-      console.log(setCount + 'pass')
     }
   }
 
