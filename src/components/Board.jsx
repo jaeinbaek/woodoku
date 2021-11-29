@@ -32,7 +32,7 @@ function Board() {
   const [blockCode, setBlockCode] = useState(0)
   const [blockIndexInTrayArr, setBlockIndexInTrayArr] = useState(0)
   const [trayBlockArr, setTrayBlockArr] = useState(createRandomTray())
-  const [overlayBoard, setOverlayBoard] = useState()
+  const [boardBeforeOverlay, setBoardBeforeOverlay] = useState()
 
   useEffect(() => {
     // Simulate tray after change that
@@ -62,27 +62,26 @@ function Board() {
       checkerAfterBlockSet()
     }
   }
-
+  
   // Mouse over
   const overlayBlock = (sRow, sCol, status) => {
     let settedBoard = ''
     switch (status) {
       case 'mouseover':
-        setOverlayBoard(board)
+        setBoardBeforeOverlay(board)
         settedBoard = overlaySwitchBlocks(board, blockCode, sRow, sCol)
         if (typeof settedBoard === "object"){
           setBoard([...settedBoard])
         }
         break;
-      case 'mouseleave':
-        console.log('mouseLeave')
-        setBoard([...overlayBoard])
-        break;
-      default:
-        break;
-    }
-  }
-
+        case 'mouseleave':
+          setBoard([...boardBeforeOverlay])
+          break;
+          default:
+            break;
+          }
+        }
+          
   // Action After Block Set
   const checkerAfterBlockSet = () => {
     let copyOfBoard = board
