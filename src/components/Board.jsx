@@ -25,6 +25,17 @@ function createRandomTray() {
   }
   return tempArr
 }
+
+// async state
+function useAsyncState(initialValue) {
+  const [value, setValue] = useState(initialValue);
+  const setter = x =>
+    new Promise(resolve => {
+      setValue(x);
+      resolve(x);
+    });
+  return [value, setter];
+}
   
 function Board() {
   const [board, setBoard] = useState(create2DArray(9, 9))
@@ -32,7 +43,8 @@ function Board() {
   const [blockCode, setBlockCode] = useState(0)
   const [blockIndexInTrayArr, setBlockIndexInTrayArr] = useState(0)
   const [trayBlockArr, setTrayBlockArr] = useState(createRandomTray())
-  const [boardBeforeOverlay, setBoardBeforeOverlay] = useState()
+  
+  const [backcupBoard, setBackupBoard] = useAsyncState(board)
 
   useEffect(() => {
     // Simulate tray after change that
@@ -63,25 +75,39 @@ function Board() {
     }
   }
   
-  // Mouse over
+
   const overlayBlock = (sRow, sCol, status) => {
-    let settedBoard = ''
     switch (status) {
       case 'mouseover':
-        setBoardBeforeOverlay(board)
-        settedBoard = overlaySwitchBlocks(board, blockCode, sRow, sCol)
-        if (typeof settedBoard === "object"){
-          setBoard([...settedBoard])
-        }
+        overMouse(sRow, sCol)
+        return
+      case 'mouseleave':
+        leaveMouse(sRow, sCol)
+        return
+      default:  
         break;
-        case 'mouseleave':
-          setBoard([...boardBeforeOverlay])
-          break;
-          default:
-            break;
-          }
-        }
-          
+    }
+  }
+  
+  // const overMouse = (sRow, sCol) => {
+  //   let settedBoard = overlaySwitchBlocks(board, blockCode, sRow, sCol)
+  //   if (typeof settedBoard === "object") {
+  //     setBoard([...settedBoard])
+  //   }
+  // }
+
+  async function overMouse(sRow, sCol) {
+    let settedBoard = overlaySwitchBlocks(board, blockCode, sRow, sCol)
+    if (typeof settedBoard === "object") {
+      await setBackupBoard(settedBoard)
+      setBoard([...settedBoard])
+    }
+  }
+  
+  const leaveMouse = () => {
+    setBoard([...backcupBoard])
+  }
+
   // Action After Block Set
   const checkerAfterBlockSet = () => {
     let copyOfBoard = board
