@@ -15,6 +15,7 @@ function create2DArray(row, col) {
   }
   return arr;
 }
+
 // Function for genarate random tray
 function createRandomTray() {
   let tempArr = []
@@ -26,25 +27,13 @@ function createRandomTray() {
   return tempArr
 }
 
-// async state
-function useAsyncState(initialValue) {
-  const [value, setValue] = useState(initialValue);
-  const setter = x =>
-    new Promise(resolve => {
-      setValue(x);
-      resolve(x);
-    });
-  return [value, setter];
-}
-  
 function Board() {
   const [board, setBoard] = useState(create2DArray(9, 9))
   const [score, setScore] = useState(0)
-  const [blockCode, setBlockCode] = useState(0)
+  const [blockCode, setBlockCode] =  useState(0)
   const [blockIndexInTrayArr, setBlockIndexInTrayArr] = useState(0)
   const [trayBlockArr, setTrayBlockArr] = useState(createRandomTray())
-  
-  const [backcupBoard, setBackupBoard] = useAsyncState(board)
+  const [backUpBoard, setBackupBoard] = useState(create2DArray(9, 9))
 
   useEffect(() => {
     // Simulate tray after change that
@@ -72,9 +61,9 @@ function Board() {
       setBoard([...settedBoard])
       setBlockCode(0)
       checkerAfterBlockSet()
+      setBackupBoard([...board])
     }
   }
-  
 
   const overlayBlock = (sRow, sCol, status) => {
     switch (status) {
@@ -82,30 +71,22 @@ function Board() {
         overMouse(sRow, sCol)
         return
       case 'mouseleave':
-        leaveMouse(sRow, sCol)
+        leaveMouse()
         return
       default:  
         break;
     }
   }
   
-  // const overMouse = (sRow, sCol) => {
-  //   let settedBoard = overlaySwitchBlocks(board, blockCode, sRow, sCol)
-  //   if (typeof settedBoard === "object") {
-  //     setBoard([...settedBoard])
-  //   }
-  // }
-
-  async function overMouse(sRow, sCol) {
-    let settedBoard = overlaySwitchBlocks(board, blockCode, sRow, sCol)
-    if (typeof settedBoard === "object") {
-      await setBackupBoard(settedBoard)
-      setBoard([...settedBoard])
+  const overMouse = (sRow, sCol) => {
+    let settedOverlayBoard = overlaySwitchBlocks(board, blockCode, sRow, sCol)
+    if (typeof settedOverlayBoard === "object") {
+      setBoard([...settedOverlayBoard])
     }
   }
-  
+
   const leaveMouse = () => {
-    setBoard([...backcupBoard])
+    setBoard([...backUpBoard.map((item) => [...item])])
   }
 
   // Action After Block Set
